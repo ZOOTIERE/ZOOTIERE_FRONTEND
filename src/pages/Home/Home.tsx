@@ -1,11 +1,9 @@
-import Card from "../../components/Card/Card"
+import { Sidebar } from "../../components/Sidebar/Sidebar"
 
 export const Home = ( ) => {
     return (
         <div>
-           <Card titulo="vaca" subtitulo="lechera" imagenUrl=""    /> 
-
-
+            <Sidebar /> 
         </div>
 
 
