@@ -1,10 +1,11 @@
-
+import { RouterProvider } from "react-router-dom"
+import { AppRouter } from "./router/Router"
 
 function App() {
 
   return (
     <>
-      <h1 className="text-red-500 text-2xl">tailwindcss</h1>
+      <RouterProvider router={AppRouter} />
     </>
   )
 }
