@@ -21,7 +21,7 @@ export const Vacas = () => {
             imagenUrl={card.imagenUrl}
           />
         ))}
-        <AddCard />
+        <AddCard type='animal'/>
       </div>
     </div>
   );

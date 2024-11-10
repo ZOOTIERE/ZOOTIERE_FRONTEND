@@ -21,7 +21,7 @@ export const Crias = () => {
             imagenUrl={card.imagenUrl}
           />
         ))}
-        <AddCard />
+        <AddCard type='animal'/>
       </div>
     </div>
   );

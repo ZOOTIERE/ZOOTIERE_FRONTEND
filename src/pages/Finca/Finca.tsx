@@ -21,7 +21,7 @@ export const Finca = () => {
             imagenUrl={card.imagenUrl}
           />
         ))}
-        <AddCard />
+        <AddCard type='finca'/>
       </div>
     </div>
   );

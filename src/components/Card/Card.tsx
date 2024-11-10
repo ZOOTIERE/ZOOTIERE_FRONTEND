@@ -1,5 +1,6 @@
 import React from 'react';
 import { CardProps } from '../../types/components';
+import { useNavigate } from 'react-router-dom';
 
 export const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
   return (
@@ -14,11 +15,15 @@ export const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
   );
 };
 
-export const AddCard: React.FC = () => {
+export const AddCard: React.FC<{ type: string }> = ({ type }) => {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate(`/register-${type}`);
+  }
   return (
-    <div className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4 flex items-center justify-center">
+    <div onClick={handleClick} className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4 flex items-center justify-center">
       <button className="text-4xl text-green-400 hover:text-gray-500 transition-colors">+</button>
     </div>
   );
 };
-
