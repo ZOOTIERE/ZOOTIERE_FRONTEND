@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { 
   Home,
   GanttChartSquare,
@@ -7,18 +7,19 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { SidebarProps } from '../../types/components';
+import { useSidebar } from '../../context/SidebarContext'; // Importa el contexto
 
-
-
-export const Sidebar = ({ onLogout }: SidebarProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export const Sidebar: React.FC = () => {
+  const { isCollapsed, toggleSidebar } = useSidebar(); // Accede al estado global del Sidebar
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  const toggleMobileSidebar = () => {
+    setIsMobileOpen(!isMobileOpen);
+  };
+
   const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
-    }
+    // Aquí puedes manejar cualquier lógica de logout adicional si es necesario
+    console.log('Logout');
   };
 
   const menuItems = [
@@ -26,14 +27,6 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
     { title: 'Crías', icon: <Sprout size={24} />, path: '/crias' },
   ];
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
-  const toggleMobileSidebar = () => {
-    setIsMobileOpen(!isMobileOpen);
-  };
 
   return (
     <>
@@ -47,7 +40,7 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
 
       {/* Overlay para móvil */}
       {isMobileOpen && (
-        <div 
+        <div
           className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={toggleMobileSidebar}
         />
@@ -56,10 +49,10 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
       {/* Sidebar */}
       <div
         className={`
-          fixed left-0 top-0 h-screen bg-white shadow-lg z-40
+          h-screen bg-white shadow-lg z-40
           transition-all duration-300 ease-in-out
           ${isCollapsed ? 'w-20' : 'w-64'}
-          lg:translate-x-0
+          flex-shrink-0
           ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >

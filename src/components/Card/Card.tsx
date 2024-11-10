@@ -1,12 +1,7 @@
 import React from 'react';
+import { CardProps } from '../../types/components';
 
-interface CardProps {
-  titulo: string;
-  subtitulo: string;
-  imagenUrl: string;
-}
-
-const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
+export const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
   return (
     <div className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4">
       <img src={imagenUrl} alt={titulo} className="w-full h-36 object-cover rounded-md" />
@@ -19,7 +14,7 @@ const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
   );
 };
 
-const AddCard: React.FC = () => {
+export const AddCard: React.FC = () => {
   return (
     <div className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4 flex items-center justify-center">
       <button className="text-4xl text-green-400 hover:text-gray-500 transition-colors">+</button>
@@ -27,17 +22,3 @@ const AddCard: React.FC = () => {
   );
 };
 
-const CardContainer: React.FC = () => {
-  return (
-    <div className="flex">
-      <Card
-        titulo="Título de la tarjeta"
-        subtitulo="Subtítulo de la tarjeta"
-        imagenUrl=""
-      />
-      <AddCard />
-    </div>
-  );
-};
-
-export default CardContainer;

@@ -1,11 +1,14 @@
 import { RouterProvider } from "react-router-dom"
 import { AppRouter } from "./router/Router"
+import { SidebarProvider } from "./context/SidebarContext"
 
 function App() {
 
   return (
     <>
-      <RouterProvider router={AppRouter} />
+      <SidebarProvider>
+        <RouterProvider router={AppRouter} />
+      </SidebarProvider>
     </>
   )
 }
