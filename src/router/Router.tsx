@@ -3,7 +3,7 @@ import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 
-export const Router = createBrowserRouter([
+export const AppRouter = createBrowserRouter([
     {
         path: "/",
         element: <Home /> 
@@ -15,5 +15,24 @@ export const Router = createBrowserRouter([
     {
         path: "/register",
         element: <Register/>
+    },
+    {
+        path: "/fincas"
+    },
+    {
+        path: "/fincas/:id"
+    },
+    {
+        path: "/vacas"
+    },
+    {
+        path: "/vacas/:id"
+    },
+    {
+        path: "/crias"
+    },
+    {
+        path: "/crias/:id"
     }
+
 ]);
