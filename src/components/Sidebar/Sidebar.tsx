@@ -8,10 +8,12 @@ import {
   X
 } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext'; // Importa el contexto
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
   const { isCollapsed, toggleSidebar } = useSidebar(); // Accede al estado global del Sidebar
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileSidebar = () => {
     setIsMobileOpen(!isMobileOpen);
@@ -19,7 +21,7 @@ export const Sidebar: React.FC = () => {
 
   const handleLogout = () => {
     // Aquí puedes manejar cualquier lógica de logout adicional si es necesario
-    console.log('Logout');
+    navigate('/login');
   };
 
   const menuItems = [
@@ -72,9 +74,9 @@ export const Sidebar: React.FC = () => {
         {/* Navigation */}
         <nav className="p-4 space-y-2">
           {menuItems.map((item) => (
-            <a
+            <Link
               key={item.title}
-              href={item.path}
+              to={item.path}
               className={`
                 flex items-center px-4 py-3 text-gray-700 rounded-lg
                 hover:bg-green-50 hover:text-green-700
@@ -86,7 +88,7 @@ export const Sidebar: React.FC = () => {
               {!isCollapsed && (
                 <span className="ml-3 font-medium">{item.title}</span>
               )}
-            </a>
+            </Link>
           ))}
         </nav>
 
