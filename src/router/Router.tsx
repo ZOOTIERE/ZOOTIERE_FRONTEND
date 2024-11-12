@@ -14,7 +14,7 @@ import { DetailAnimal } from "../pages/DetailAnimal/DetailAnimal";
 export const AppRouter = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to={"/fincas"} /> 
+        element: <Navigate to={"/login"} /> 
     },
     {
         path: "/login",

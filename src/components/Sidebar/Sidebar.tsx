@@ -27,7 +27,6 @@ export const Sidebar: React.FC = () => {
   const menuItems = [
     { title: 'Fincas', icon: <Home size={24} />, path: '/fincas' },
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
-    { title: 'Crías', icon: <Sprout size={24} />, path: '/crias' },
   ];
 
   return (

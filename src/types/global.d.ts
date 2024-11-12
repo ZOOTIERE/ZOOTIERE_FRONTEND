@@ -45,6 +45,11 @@ export interface AnimalFormData {
   id_race: number;
   id_finca: number;
 }
+export interface Animal {
+  name: string;
+  type: string;
+  imagenUrl?: string; // Puedes ajustar los campos según tu API
+}
 
 export interface AnimalData {
   id_animal: number;

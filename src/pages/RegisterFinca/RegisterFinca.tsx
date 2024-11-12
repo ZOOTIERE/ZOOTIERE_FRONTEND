@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Home, Users, MapPin, Triangle, BadgeDollarSign } from 'lucide-react';
 import { FincaFormData } from '../../types/global';
+import { FincaService } from '../../api';
 
 
 
@@ -32,8 +33,8 @@ export const RegisterFinca = () => {
         throw new Error('Los valores numéricos no pueden ser negativos');
       }
 
-      console.log('Enviando datos de la finca:', formData);
-      // Aquí iría tu lógica para enviar los datos al backend
+      const response = await FincaService.createFinca(formData);
+      console.log('Respuesta del registro de finca:', response);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrar la finca');

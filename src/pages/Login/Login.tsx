@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Lock, User } from 'lucide-react';
 import { LoginFormData } from '../../types/global';
+import { AuthService } from '../../api';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: ''
@@ -19,8 +22,10 @@ export const Login = () => {
       if (!formData.email || !formData.password) {
         throw new Error('Por favor complete todos los campos');
       }
-      
-      console.log('Intentando login con:', formData);
+      const response = await AuthService.login(formData);
+      if( response === 201 || response === 200) {
+          navigate('/fincas');
+      }
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
@@ -123,9 +128,9 @@ export const Login = () => {
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200">
+              <Link to={"/register"} className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200">
                 Registrarse
-              </a>
+              </Link>
             </div>
           </div>
         </form>

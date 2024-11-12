@@ -1,28 +1,59 @@
+import React, { useEffect, useState } from 'react';
 import { AddCard, Card } from '../../components/Card/Card';
+import { FincaService } from '../../api';
+import { FincaData } from '../../types/global';
+import defaultFinca from '../../assets/imgs/image.png';
 
 
-// Datos de ejemplo para las tarjetas
-const cardData = [
-  { titulo: 'Finca 1', subtitulo: 'Ubicación: Valle', imagenUrl: 'url-de-imagen-1.jpg' },
-  { titulo: 'Finca 2', subtitulo: 'Ubicación: Montaña', imagenUrl: 'url-de-imagen-2.jpg' },
-  { titulo: 'Finca 3', subtitulo: 'Ubicación: Costa', imagenUrl: 'url-de-imagen-3.jpg' },
-];
 
-export const Finca = () => {
+export const Finca: React.FC = () => {
+  const [fincas, setFincas] = useState<FincaData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    const fetchFincas = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const response = await FincaService.getAllFincas();
+        setFincas(response); // Supongo que `response` contiene un array de fincas
+      } catch (err) {
+        setError('Error al cargar las fincas');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFincas();
+  }, []);
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Fincas</h1>
-      <div className="flex flex-wrap">
-        {cardData.map((card, index) => (
-          <Card
-            key={index}
-            titulo={card.titulo}
-            subtitulo={card.subtitulo}
-            imagenUrl={card.imagenUrl}
-          />
-        ))}
-        <AddCard type='finca'/>
-      </div>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <div className="flex flex-wrap">
+          {fincas.length === 0 ? (
+            <AddCard type="finca" />
+          ) : (
+            <>
+              {fincas.map((finca, index) => (
+                <Card
+                  key={index}
+                  titulo={finca.name || `Finca ${index + 1}`}
+                  subtitulo={`Especialidad: ${finca.especialidad|| 'Desconocida'}`}
+                  imagenUrl={defaultFinca} // Ajusta `imageUrl` según tu API
+                />
+              ))}
+              <AddCard type="finca" />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

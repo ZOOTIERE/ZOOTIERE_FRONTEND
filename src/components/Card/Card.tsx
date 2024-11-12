@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Card: React.FC<CardProps> = ({ titulo, subtitulo, imagenUrl }) => {
   return (
-    <div className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4">
+    <div className="border border-gray-300 rounded-lg p-4 w-64 h-64 text-center shadow-lg m-4">
       <img src={imagenUrl} alt={titulo} className="w-full h-36 object-cover rounded-md" />
       <h2 className="text-lg font-semibold mt-4 mb-2">{titulo}</h2>
       <p className="text-sm text-gray-600 mb-4">{subtitulo}</p>
@@ -22,7 +22,7 @@ export const AddCard: React.FC<{ type: string }> = ({ type }) => {
     navigate(`/register-${type}`);
   }
   return (
-    <div onClick={handleClick} className="border border-gray-300 rounded-lg p-4 w-64 text-center shadow-lg m-4 flex items-center justify-center">
+    <div onClick={handleClick} className="border border-gray-300 rounded-lg p-4 w-64 h-64 text-center shadow-lg m-4 flex items-center justify-center">
       <button className="text-4xl text-green-400 hover:text-gray-500 transition-colors">+</button>
     </div>
   );

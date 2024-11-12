@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Lock, User, Mail } from 'lucide-react';
 import { RegisterFormData } from '../../types/global';
+import { AuthService } from '../../api';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 export const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterFormData>({
     username: '',
     email: '',
@@ -21,7 +24,10 @@ export const Register = () => {
         throw new Error('Por favor complete todos los campos');
       }
       
-      console.log('Intentando registro con:', formData);
+      const response = await AuthService.register(formData);
+      if (response === 201 || response === 200) {
+        navigate('/fincas');
+      }
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrarse');
@@ -133,9 +139,9 @@ export const Register = () => {
 
           <div className="text-center">
             <div className="text-sm">
-              <a href="#" className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200">
+              <Link to={"/login"} className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200">
                 ¿Ya tienes una cuenta? Inicia sesión
-              </a>
+              </Link>
             </div>
           </div>
         </form>

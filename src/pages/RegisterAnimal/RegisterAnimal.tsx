@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, Tag, Calendar, Home, Heart } from 'lucide-react';
 import { AnimalFormData } from '../../types/global';
+import { AnimalService } from '../../api';
 
 
 
@@ -25,10 +26,10 @@ export const RegisterAnimal = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Datos del formulario:', formData);
-    // Aquí iría la lógica para enviar los datos al backend
+    const response = await AnimalService.createAnimal(formData);
+    console.log('Respuesta del registro de animal:', response);
   };
 
   return (
