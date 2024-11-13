@@ -43,6 +43,7 @@ export const Vacas: React.FC = () => {
             <>
               {animales.map((animal, index) => (
                 <Card
+                  id={animal.id}
                   key={index}
                   titulo={animal.marca || `Animal ${index + 1}`}
                   subtitulo={animal.name || 'Desconocido'}

@@ -20,7 +20,7 @@ export interface FincaFormData {
 }
 
 export interface FincaData {
-  id_finca: number;
+  id: number;
   name: string;
   address_finca: string;
   num_trabajadores: number;
@@ -52,7 +52,7 @@ export interface Animal {
 }
 
 export interface AnimalData {
-  id_animal: number;
+  id : number;
   name: string;
   marca: string;
   species: number;

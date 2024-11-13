@@ -17,14 +17,14 @@ export const Finca: React.FC = () => {
         setLoading(true);
         setError('');
         const response = await FincaService.getAllFincas();
-        setFincas(response); // Supongo que `response` contiene un array de fincas
+        setFincas(response.data); // Supongo que `response` contiene un array de fincas
       } catch (err) {
         setError('Error al cargar las fincas');
       } finally {
         setLoading(false);
       }
     };
-
+    console.log(fincas);
     fetchFincas();
   }, []);
 
@@ -44,9 +44,11 @@ export const Finca: React.FC = () => {
               {fincas.map((finca, index) => (
                 <Card
                   key={index}
+                  id={finca.id}
                   titulo={finca.name || `Finca ${index + 1}`}
                   subtitulo={`Especialidad: ${finca.especialidad|| 'Desconocida'}`}
                   imagenUrl={defaultFinca} // Ajusta `imageUrl` según tu API
+                  type='fincas'
                 />
               ))}
               <AddCard type="finca" />

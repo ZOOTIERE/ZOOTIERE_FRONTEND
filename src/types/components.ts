@@ -8,9 +8,11 @@ export interface AppLayoutProps {
 }
 
 export interface CardProps {
+  id: number;
   titulo: string;
   subtitulo: string;
   imagenUrl: string;
+  type?: string;
 }
 
 export interface SidebarContextType {

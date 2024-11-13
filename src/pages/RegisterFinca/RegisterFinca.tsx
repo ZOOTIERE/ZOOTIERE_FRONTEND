@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Home, Users, MapPin, Triangle, BadgeDollarSign } from 'lucide-react';
 import { FincaFormData } from '../../types/global';
 import { FincaService } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -15,7 +16,7 @@ export const RegisterFinca = () => {
     num_crias: 0,
     especialidad: ''
   });
-
+  const navigate = useNavigate();
   const [error, setError] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +35,9 @@ export const RegisterFinca = () => {
       }
 
       const response = await FincaService.createFinca(formData);
-      console.log('Respuesta del registro de finca:', response);
+      if (response.status === 200 || response.status === 201) {
+        navigate('/fincas');
+      }
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrar la finca');
