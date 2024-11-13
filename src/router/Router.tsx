@@ -10,6 +10,8 @@ import { DetailFinca } from "../pages/DetailFinca/DetailFinca";
 import { RegisterFinca } from "../pages/RegisterFinca/RegisterFinca";
 import { RegisterAnimal } from "../pages/RegisterAnimal/RegisterAnimal";
 import { DetailAnimal } from "../pages/DetailAnimal/DetailAnimal";
+import { RegisterSpecies } from "../pages/RegisterSpecie/RegisterSpecie";
+import { RegisterRazas } from "../pages/RegisterRaza/RegisterRaza";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -55,6 +57,17 @@ export const AppRouter = createBrowserRouter([
     {
         path: "/crias/:id",
         element: <AppLayout><DetailAnimal/></AppLayout>
+    },
+    {
+        path: "/register-specie",
+        element: <AppLayout><RegisterSpecies/></AppLayout>
+    },
+    {
+        path: "/register-raza",
+        element: <AppLayout><RegisterRazas/></AppLayout>
+    },
+    {
+        path: "/vacunas"
     }
 
 ]);

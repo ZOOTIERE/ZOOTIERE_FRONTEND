@@ -66,3 +66,13 @@ export interface AnimalData {
   id_race: number;
   id_finca: number;
 }
+
+export interface SpeciesForm {
+  species_name: string; 
+}
+
+
+export interface RazasForm {
+  name_race: string;
+  description: string;
+}

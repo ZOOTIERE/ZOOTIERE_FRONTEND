@@ -3,7 +3,9 @@ import {
   Home,
   GanttChartSquare,
   Sprout,
+  BookOpen,
   LogOut,
+  PawPrint,
   Menu,
   X
 } from 'lucide-react';
@@ -22,11 +24,14 @@ export const Sidebar: React.FC = () => {
   const handleLogout = () => {
     // Aquí puedes manejar cualquier lógica de logout adicional si es necesario
     navigate('/login');
+    localStorage.removeItem("data");
   };
 
   const menuItems = [
     { title: 'Fincas', icon: <Home size={24} />, path: '/fincas' },
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
+    { title: 'Especies', icon: <PawPrint size={24}/>, path: '/register-specie' },
+    { title: 'Razas', icon: <BookOpen size={24}/>, path: '/register-raza' },
   ];
 
   return (

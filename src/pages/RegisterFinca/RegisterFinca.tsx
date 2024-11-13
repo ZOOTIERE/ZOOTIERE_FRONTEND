@@ -3,6 +3,7 @@ import { Home, Users, MapPin, Triangle, BadgeDollarSign } from 'lucide-react';
 import { FincaFormData } from '../../types/global';
 import { FincaService } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
@@ -36,11 +37,13 @@ export const RegisterFinca = () => {
 
       const response = await FincaService.createFinca(formData);
       if (response.status === 200 || response.status === 201) {
+        toast.success('Finca registrada correctamente');
         navigate('/fincas');
       }
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrar la finca');
+      toast.error('Error al registrar la finca');
     }
   };
 
