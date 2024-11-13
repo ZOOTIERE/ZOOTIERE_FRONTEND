@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { PawPrint } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { SpeciesForm } from '../../types/global';
 import { AnimalService } from '../../api';
 import { toast } from 'react-toastify';
@@ -10,7 +9,6 @@ export const RegisterSpecies = () => {
   const [formData, setFormData] = useState<SpeciesForm>({
     species_name: ''
   });
-  const navigate = useNavigate();
   const [error, setError] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {

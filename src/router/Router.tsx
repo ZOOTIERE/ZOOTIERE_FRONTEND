@@ -1,5 +1,4 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { Home } from "../pages/Home/Home";
 import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 import { AppLayout } from "../Layout/App/AppLayout";
@@ -12,6 +11,7 @@ import { RegisterAnimal } from "../pages/RegisterAnimal/RegisterAnimal";
 import { DetailAnimal } from "../pages/DetailAnimal/DetailAnimal";
 import { RegisterSpecies } from "../pages/RegisterSpecie/RegisterSpecie";
 import { RegisterRazas } from "../pages/RegisterRaza/RegisterRaza";
+import { RegisterVacuna } from "../pages/RegisterVacunas/RegisterVacunas";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -67,7 +67,8 @@ export const AppRouter = createBrowserRouter([
         element: <AppLayout><RegisterRazas/></AppLayout>
     },
     {
-        path: "/vacunas"
+        path: "/register-vacunas",
+        element: <AppLayout><RegisterVacuna/></AppLayout> 
     }
 
 ]);

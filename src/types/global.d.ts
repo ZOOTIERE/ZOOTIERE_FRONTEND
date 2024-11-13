@@ -76,3 +76,10 @@ export interface RazasForm {
   name_race: string;
   description: string;
 }
+
+export interface VacunaFormData {
+  animal: number;
+  fecha_aplicacion: string;
+  tipo_vacuna: string;
+  dosis: string;
+}

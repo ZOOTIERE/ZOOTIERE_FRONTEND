@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { 
   Home,
   GanttChartSquare,
-  Sprout,
   BookOpen,
   LogOut,
   PawPrint,
+  Syringe,
   Menu,
   X
 } from 'lucide-react';
@@ -32,6 +32,7 @@ export const Sidebar: React.FC = () => {
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
     { title: 'Especies', icon: <PawPrint size={24}/>, path: '/register-specie' },
     { title: 'Razas', icon: <BookOpen size={24}/>, path: '/register-raza' },
+    { title: 'Vacunas', icon: <Syringe size={24} />, path: '/register-vacunas' },
   ];
 
   return (
