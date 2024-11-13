@@ -5,6 +5,7 @@ export const AuthService = {
   login: async (data: LoginFormData) => {
     try {
       const response = await apiInstance.post('/api/users/login/', data);
+      localStorage.setItem('data', JSON.stringify(response.data));
       return response.status;
     } catch (error:any) {
       throw error.response ? error.response.data : new Error('Error en el login');
@@ -14,6 +15,7 @@ export const AuthService = {
   register: async (data: RegisterFormData) => {
     try {
       const response = await apiInstance.post('/api/users/register/', data);
+      localStorage.setItem('data', JSON.stringify(response.data));
       return response.status;
     } catch (error:any) {
       throw error.response ? error.response.data : new Error('Error en el registro');

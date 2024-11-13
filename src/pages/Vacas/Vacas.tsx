@@ -47,7 +47,8 @@ export const Vacas: React.FC = () => {
                   key={index}
                   titulo={animal.marca || `Animal ${index + 1}`}
                   subtitulo={animal.name || 'Desconocido'}
-                  imagenUrl={defaultVaca} // Ajusta `imagenUrl` según tu API
+                  imagenUrl={defaultVaca}
+                  type='vacas' // Ajusta `imagenUrl` según tu API
                 />
               ))}
               <AddCard type="animal" />
