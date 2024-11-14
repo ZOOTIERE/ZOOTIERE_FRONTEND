@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent} from 'react';
 import { Home, Users, MapPin, Triangle, BadgeDollarSign } from 'lucide-react';
 import { FincaFormData } from '../../types/global';
 import { FincaService } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 
 
 
@@ -47,13 +48,16 @@ export const RegisterFinca = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'number' ? (value === '' ? 0 : Number(value)) : value
-    }));
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // Verificar que el valor solo contenga dígitos numéricos
+    if (/^\d*$/.test(value)) {
+      setFormData({
+        ...formData,
+        [e.target.name]: value,
+      });
+    }
   };
 
   const especialidades = [
@@ -143,7 +147,7 @@ export const RegisterFinca = () => {
               </div>
             </div>
 
-            {/* Hectáreas */}
+            {/* Metros cuadrados */}
             <div>
               <label htmlFor="hectareas" className="block text-sm font-medium text-gray-700">
                 Hectáreas
@@ -156,8 +160,8 @@ export const RegisterFinca = () => {
                   type="number"
                   name="hectareas"
                   id="hectareas"
-                  min="0"
-                  step="0.01"
+                  placeholder='0'
+                  step="1"
                   className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
                   value={formData.hectareas}
                   onChange={handleChange}
@@ -218,7 +222,7 @@ export const RegisterFinca = () => {
                 required
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md"
                 value={formData.especialidad}
-                onChange={handleChange}
+                
               >
                 <option value="">Seleccione una especialidad</option>
                 {especialidades.map((esp) => (
