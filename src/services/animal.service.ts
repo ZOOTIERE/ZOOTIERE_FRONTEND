@@ -1,4 +1,4 @@
-import { AnimalFormData } from '../types/global';
+import { AnimalFormData, RazasForm, SpeciesForm } from '../types/global';
 import { apiInstance } from '../api/axios';
 
 export const AnimalService = {
@@ -39,6 +39,14 @@ export const AnimalService = {
       throw error.response ? error.response.data : new Error('Error al obtener las especies');
     }
   },
+  createSpecies: async (data: SpeciesForm) => {
+    try {
+      const response = await apiInstance.post('/api/especies/', data);
+      return response;
+    } catch (error: any) {
+      throw error.response ? error.response.data : new Error('Error al obtener las especies');
+    }
+  },
 
   getEspecieById: async (id: string | number) => {
     try {
@@ -66,5 +74,14 @@ export const AnimalService = {
     } catch (error: any) {
       throw error.response ? error.response.data : new Error('Error al obtener la raza');
     }
-  }
+  },
+
+  createRazas: async (data: RazasForm) => {
+    try {
+      const response = await apiInstance.post('/api/razas/', data);
+      return response;
+    } catch (error: any) {
+      throw error.response ? error.response.data : new Error('Error al obtener las especies');
+    }
+  },
 };

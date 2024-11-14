@@ -66,3 +66,20 @@ export interface AnimalData {
   id_race: number;
   id_finca: number;
 }
+
+export interface SpeciesForm {
+  species_name: string; 
+}
+
+
+export interface RazasForm {
+  name_race: string;
+  description: string;
+}
+
+export interface VacunaFormData {
+  animal: number;
+  fecha_aplicacion: string;
+  tipo_vacuna: string;
+  dosis: string;
+}
