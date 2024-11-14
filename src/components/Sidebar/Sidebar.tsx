@@ -26,13 +26,13 @@ export const Sidebar: React.FC = () => {
     navigate('/login');
     localStorage.removeItem("data");
   };
-
+ //   { title: 'Vacunas', icon: <Syringe size={24} />, path: '/register-vacunas' },
   const menuItems = [
     { title: 'Fincas', icon: <Home size={24} />, path: '/fincas' },
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
     { title: 'Especies', icon: <PawPrint size={24}/>, path: '/register-specie' },
     { title: 'Razas', icon: <BookOpen size={24}/>, path: '/register-raza' },
-    { title: 'Vacunas', icon: <Syringe size={24} />, path: '/register-vacunas' },
+ 
   ];
 
   return (
