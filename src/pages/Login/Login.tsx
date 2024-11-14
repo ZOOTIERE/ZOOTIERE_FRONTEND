@@ -3,8 +3,7 @@ import { Lock, User } from 'lucide-react';
 import { LoginFormData } from '../../types/global';
 import { AuthService } from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import logo from '../../../public/logo_ZOOTIERE.jpeg';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -43,8 +42,14 @@ export const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-50 to-green-100">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+        <div className="flex flex-col items-center">
+          {/* Logo */}
+          <img
+            src={logo}  
+            alt="Logo"
+            className="h-80 w-auto mb-6" 
+          />
+          <h2 className="mt-2 text-center text-3xl font-bold text-gray-900">
             Sistema de Gestión de Fincas
           </h2>
           <p className="mt-2 text-center text-sm text-green-700">

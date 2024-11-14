@@ -27,6 +27,7 @@ export const Sidebar: React.FC = () => {
   const menuItems = [
     { title: 'Fincas', icon: <Home size={24} />, path: '/fincas' },
     { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
+    
   ];
 
   return (
@@ -60,7 +61,7 @@ export const Sidebar: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           {!isCollapsed && (
-            <h2 className="text-xl font-bold text-green-700">GestFincas</h2>
+            <h2 className="text-xl font-bold text-green-700">ZOOTIERE</h2>
           )}
           <button
             onClick={toggleSidebar}
