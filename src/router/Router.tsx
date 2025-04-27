@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter} from "react-router-dom";
 import { Login } from "../pages/Login/Login";
 import { Register } from "../pages/Register/Register";
 import { AppLayout } from "../Layout/App/AppLayout";
@@ -12,11 +12,20 @@ import { DetailAnimal } from "../pages/DetailAnimal/DetailAnimal";
 import { RegisterSpecies } from "../pages/RegisterSpecie/RegisterSpecie";
 import { RegisterRazas } from "../pages/RegisterRaza/RegisterRaza";
 import { RegisterVacuna } from "../pages/RegisterVacunas/RegisterVacunas";
+import { HomeLayout } from "../Layout/Home/HomeLayout";
+import { Home } from "../pages/Home/Home";
+import { Pricing } from "../pages/Pricing/Pricing";
 
 export const AppRouter = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to={"/login"} /> 
+        element: <HomeLayout><Home/></HomeLayout>, 
+    },{
+        path: "/pricing",
+        element: <HomeLayout><Pricing/></HomeLayout>,
+    },{
+        path: "/solutions",
+        element: <HomeLayout><Pricing/></HomeLayout>,
     },
     {
         path: "/login",

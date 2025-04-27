@@ -83,3 +83,10 @@ export interface VacunaFormData {
   tipo_vacuna: string;
   dosis: string;
 }
+
+export interface Plan {
+  name: string;
+  price: string;
+  features: string[];
+  isPopular?: boolean;
+}
