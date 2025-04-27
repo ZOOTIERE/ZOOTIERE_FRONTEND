@@ -15,6 +15,7 @@ import { RegisterVacuna } from "../pages/RegisterVacunas/RegisterVacunas";
 import { HomeLayout } from "../Layout/Home/HomeLayout";
 import { Home } from "../pages/Home/Home";
 import { Pricing } from "../pages/Pricing/Pricing";
+import { NewUser } from "../pages/NewUser/NewUser";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ export const AppRouter = createBrowserRouter([
     },{
         path: "/solutions",
         element: <HomeLayout><Pricing/></HomeLayout>,
+    },
+    {
+        path: "/new-user",
+        element: <NewUser/>,
     },
     {
         path: "/login",
