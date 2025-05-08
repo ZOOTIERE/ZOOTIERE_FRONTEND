@@ -1,20 +1,21 @@
-import { AnimalFormData, RazasForm, SpeciesForm } from '../types/global';
+import { AnimalFormData } from '../types/global';
 import { apiInstance } from '../api/axios';
+import { API_ENDPOINTS } from '../api/endpoints';
 
 export const AnimalService = {
   // Métodos para Animales
-  getAllAnimals: async () => {
+  getAllAnimals: async (id: string) => {
     try {
-      const response = await apiInstance.get('/api/animales/');
+      const response = await apiInstance.get(API_ENDPOINTS.ANIMAL.LISTBYFINCA(id));
       return response.data;
     } catch (error: any) {
       throw error.response ? error.response.data : new Error('Error al obtener los animales');
     }
   },
 
-  getAnimalById: async (id: string | number) => {
+  getAnimalById: async (id: string) => {
     try {
-      const response = await apiInstance.get(`/api/animales/${id}/`);
+      const response = await apiInstance.get(API_ENDPOINTS.ANIMAL.LISTBYID(id));
       return response.data;
     } catch (error: any) {
       throw error.response ? error.response.data : new Error('Error al obtener el animal');
@@ -23,65 +24,11 @@ export const AnimalService = {
 
   createAnimal: async (data: AnimalFormData) => {
     try {
-      const response = await apiInstance.post('/api/animales/', data);
+      const response = await apiInstance.post(API_ENDPOINTS.ANIMAL.CREATE, data);
       return response;
     } catch (error: any) {
       throw error.response ? error.response.data : new Error('Error al registrar el animal');
     }
   },
 
-  // Métodos para Especies
-  getAllEspecies: async () => {
-    try {
-      const response = await apiInstance.get('/api/especies/');
-      return response.data;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener las especies');
-    }
-  },
-  createSpecies: async (data: SpeciesForm) => {
-    try {
-      const response = await apiInstance.post('/api/especies/', data);
-      return response;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener las especies');
-    }
-  },
-
-  getEspecieById: async (id: string | number) => {
-    try {
-      const response = await apiInstance.get(`/api/especies/${id}/`);
-      return response.data;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener la especie');
-    }
-  },
-
-  // Métodos para Razas
-  getAllRazas: async () => {
-    try {
-      const response = await apiInstance.get('/api/razas/');
-      return response.data;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener las razas');
-    }
-  },
-
-  getRazaById: async (id: string | number) => {
-    try {
-      const response = await apiInstance.get(`/api/razas/${id}/`);
-      return response.data;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener la raza');
-    }
-  },
-
-  createRazas: async (data: RazasForm) => {
-    try {
-      const response = await apiInstance.post('/api/razas/', data);
-      return response;
-    } catch (error: any) {
-      throw error.response ? error.response.data : new Error('Error al obtener las especies');
-    }
-  },
 };
