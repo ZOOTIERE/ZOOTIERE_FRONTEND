@@ -26,7 +26,7 @@ export const Register = () => {
       
       const response = await AuthService.register(formData);
       if (response === 201 || response === 200) {
-        navigate('/fincas');
+        navigate('/new-farm');
       }
       
     } catch (err) {

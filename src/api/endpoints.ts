@@ -6,7 +6,8 @@ export const API_ENDPOINTS = {
     FINCAS: {
         CREATE: '/api/farms/',
         LIST: '/api/farms/',
-        LISTBYID: (id: string) => `/api/farms/${id}/`,
+        FARMBYUD: (id: string) => `/api/farms/${id}/`,
+        LISTBYID: (id: string) => `/api/farms/user/${id}/`,
         LISTBYNAME: (name: string) => `/api/farms/name/${name}`,
     },
     ANIMAL: {

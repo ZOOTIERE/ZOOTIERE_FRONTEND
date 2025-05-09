@@ -14,6 +14,7 @@ export const FincaService = {
   getFincaID: async (id:string) => {
     try {
       const response = await apiInstance.get(API_ENDPOINTS.FINCAS.LISTBYID(id));
+      console.log(response.data);
       return response;
     } catch (error:any) {
       throw error.response ? error.response.data : new Error('Error al obtener las fincas');
@@ -27,9 +28,9 @@ export const FincaService = {
       throw error.response ? error.response.data : new Error('Error al crear la finca');
     }
   },
-  getFincaName: async (name:string) => {
+  getFincaDetail: async (id:string) => {
     try {
-      const response = await apiInstance.get(API_ENDPOINTS.FINCAS.LISTBYNAME(name));
+      const response = await apiInstance.get(API_ENDPOINTS.FINCAS.FARMBYUD(id));
       return response;
     } catch (error:any) {
       throw error.response ? error.response.data : new Error('Error al obtener las fincas');

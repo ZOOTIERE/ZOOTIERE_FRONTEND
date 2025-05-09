@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { 
   Home,
-  GanttChartSquare,
-  BookOpen,
   LogOut,
-  PawPrint,
-  Syringe,
   Menu,
-  X
+  X,
+  PlusCircle,
+  Users,
+  Syringe,
+  Apple
 } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext'; // Importa el contexto
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,13 +27,13 @@ export const Sidebar: React.FC = () => {
     localStorage.removeItem("data");
   };
  //   { title: 'Vacunas', icon: <Syringe size={24} />, path: '/register-vacunas' },
-  const menuItems = [
-    { title: 'Fincas', icon: <Home size={24} />, path: '/fincas' },
-    { title: 'Vacas', icon: <GanttChartSquare size={24} />, path: '/vacas' },
-    { title: 'Especies', icon: <PawPrint size={24}/>, path: '/register-specie' },
-    { title: 'Razas', icon: <BookOpen size={24}/>, path: '/register-raza' },
- 
-  ];
+const menuItems = [
+  { title: 'Fincas', icon: <Home size={24} />, path: '/farms' },
+  { title: 'Nuevo animal', icon: <PlusCircle size={24} />, path: '/register-animal' },
+  { title: 'Trabajadores', icon: <Users size={24} />, path: '/workers' },
+  { title: 'Nueva vacuna', icon: <Syringe size={24} />, path: '/register-vaccine' },
+  { title: 'Nueva alimentacion', icon: <Apple size={24} />, path: '/register-feed' },
+];
 
   return (
     <>

@@ -8,7 +8,7 @@ export interface AppLayoutProps {
 }
 
 export interface CardProps {
-  id: number;
+  id: string;
   titulo: string;
   subtitulo: string;
   imagenUrl: string;

@@ -22,6 +22,15 @@ export const AnimalService = {
     }
   },
 
+  getAnimalsByFinca: async (id: string) => {
+    try {
+      const response = await apiInstance.get(API_ENDPOINTS.ANIMAL.LISTBYFINCA(id));
+      return response.data;
+    } catch (error: any) {
+      throw error.response ? error.response.data : new Error('Error al obtener el animal');
+    }
+  },
+
   createAnimal: async (data: AnimalFormData) => {
     try {
       const response = await apiInstance.post(API_ENDPOINTS.ANIMAL.CREATE, data);

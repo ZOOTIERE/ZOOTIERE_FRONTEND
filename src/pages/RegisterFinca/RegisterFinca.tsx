@@ -1,254 +1,268 @@
-import React, { useState, ChangeEvent} from 'react';
-import { Home, Users, MapPin, Triangle, BadgeDollarSign } from 'lucide-react';
-import { FincaFormData } from '../../types/global';
+import { FC, useState, useEffect } from 'react';
+import { Home, MapPin, Users, LayoutGrid, Wheat, Beef, CheckCircle } from 'lucide-react';
+import { getUserDataFromLocalStorage } from '../../utils/getUserData';
 import { FincaService } from '../../api';
+import { FincaFormData } from '../../types/global';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 
-
-
-export const RegisterFinca = () => {
-  const [formData, setFormData] = useState<FincaFormData>({
-    name: '',
-    address_finca: '',
-    num_trabajadores: 0,
-    hectareas: 0,
-    num_vacas: 0,
-    num_crias: 0,
-    especialidad: ''
-  });
+export const RegisterFinca: FC = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState<string>('');
+  const [formData, setFormData] = useState<Omit<FincaFormData, 'userId'>>({
+    name: '',
+    address: '',
+    category: 'Ganadera',
+    employees: 1,
+    hectares: 0,
+    cropsHectares: 0,
+    livestockHectares: 0
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    
-    try {
-      // Validaciones básicas
-      if (!formData.name || !formData.address_finca || !formData.especialidad) {
-        throw new Error('Por favor complete todos los campos obligatorios');
-      }
-
-      if (formData.num_trabajadores < 0 || formData.hectareas < 0 || 
-          formData.num_vacas < 0 || formData.num_crias < 0) {
-        throw new Error('Los valores numéricos no pueden ser negativos');
-      }
-
-      const response = await FincaService.createFinca(formData);
-      if (response.status === 200 || response.status === 201) {
-        toast.success('Finca registrada correctamente');
-        navigate('/fincas');
-      }
-      
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al registrar la finca');
-      toast.error('Error al registrar la finca');
+  useEffect(() => {
+    if (formData.category === 'Ganadera') {
+      setFormData(prev => ({
+        ...prev,
+        livestockHectares: prev.hectares,
+        cropsHectares: 0
+      }));
+    } else if (formData.category === 'Agricola') {
+      setFormData(prev => ({
+        ...prev,
+        cropsHectares: prev.hectares,
+        livestockHectares: 0
+      }));
     }
-  };
+  }, [formData.category, formData.hectares]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // Verificar que el valor solo contenga dígitos numéricos
-    if (/^\d*$/.test(value)) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    
+    // Convert to number for numeric fields
+    if (['employees', 'hectares', 'cropsHectares', 'livestockHectares'].includes(name)) {
       setFormData({
         ...formData,
-        [e.target.name]: value,
+        [name]: parseInt(value) || 0
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
       });
     }
   };
 
-  const especialidades = [
-    'Lechera',
-    'Cárnica',
-    'Mixta',
-    'Cría',
-    'Engorde'
-  ];
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // In a real app, you would get the userId from authentication context
+    const userId = getUserDataFromLocalStorage()?.id as string; // Placeholder
+    
+    setIsSubmitting(true);
+    
+    try {
+      
+      const completeData: FincaFormData = {
+        ...formData,
+        userId
+      };
+      
+      const response = await FincaService.createFinca(completeData);
+      console.log('Finca created:', response.data);
+      setIsSuccess(true);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRedirect = () => {
+    navigate('/fincas'); 
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-green-50 to-white">
+        <div className="max-w-xl mx-auto px-4 py-24 text-center">
+          <div className="bg-white p-8 rounded-xl shadow-md">
+            <div className="flex justify-center mb-6">
+              <CheckCircle size={64} className="text-green-500" />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              ¡Finca creada con éxito!
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              Ya puedes comenzar a gestionar "{formData.name}" y aprovechar todas las herramientas de Zootiere.
+            </p>
+            <button onClick={handleRedirect} className="bg-green-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-green-600">
+              Ir al Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
-        <div className="px-8 py-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900">Registrar Nueva Finca</h2>
-          <p className="mt-1 text-sm text-green-600">Complete la información de la nueva finca</p>
+    <div className="pt-20 min-h-screen bg-gradient-to-b from-green-50 to-white">
+      <div className="max-w-3xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            Crea tu <span className="text-green-600">Finca</span>
+          </h1>
+          <p className="text-xl text-gray-600">
+            Comienza a gestionar tus recursos de manera inteligente
+          </p>
         </div>
-
-        <form onSubmit={handleSubmit} className="px-8 py-6 space-y-6">
-          {error && (
-            <div className="bg-red-50 text-red-500 p-4 rounded-md text-sm">
-              {error}
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {/* Nombre de la Finca */}
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Nombre de la Finca *
+        
+        <div className="bg-white p-8 rounded-xl shadow-md">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                <Home size={20} className="mr-2 text-green-600" />
+                Nombre de la Finca
               </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Home className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="Ej: Hacienda El Paraíso"
+                required
+              />
             </div>
-
-            {/* Dirección */}
-            <div>
-              <label htmlFor="address_finca" className="block text-sm font-medium text-gray-700">
-                Dirección *
+            
+            <div className="mb-6">
+              <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                <MapPin size={20} className="mr-2 text-green-600" />
+                Dirección
               </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <MapPin className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="text"
-                  name="address_finca"
-                  id="address_finca"
-                  required
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.address_finca}
-                  onChange={handleChange}
-                />
-              </div>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                placeholder="Ej: Km 5 Vía Principal, Municipio"
+                required
+              />
             </div>
-
-            {/* Número de Trabajadores */}
-            <div>
-              <label htmlFor="num_trabajadores" className="block text-sm font-medium text-gray-700">
-                Número de Trabajadores
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Users className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="number"
-                  name="num_trabajadores"
-                  id="num_trabajadores"
-                  min="0"
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.num_trabajadores}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* Metros cuadrados */}
-            <div>
-              <label htmlFor="hectareas" className="block text-sm font-medium text-gray-700">
-                Hectáreas
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Triangle className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="number"
-                  name="hectareas"
-                  id="hectareas"
-                  placeholder='0'
-                  step="1"
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.hectareas}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* Número de Vacas */}
-            <div>
-              <label htmlFor="num_vacas" className="block text-sm font-medium text-gray-700">
-                Número de Vacas
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <BadgeDollarSign className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="number"
-                  name="num_vacas"
-                  id="num_vacas"
-                  min="0"
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.num_vacas}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* Número de Crías */}
-            <div>
-              <label htmlFor="num_crias" className="block text-sm font-medium text-gray-700">
-                Número de Crías
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <BadgeDollarSign className="h-5 w-5 text-green-500" />
-                </div>
-                <input
-                  type="number"
-                  name="num_crias"
-                  id="num_crias"
-                  min="0"
-                  className="pl-10 focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  value={formData.num_crias}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* Especialidad */}
-            <div>
-              <label htmlFor="especialidad" className="block text-sm font-medium text-gray-700">
-                Especialidad *
+            
+            <div className="mb-6">
+              <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                <LayoutGrid size={20} className="mr-2 text-green-600" />
+                Categoría
               </label>
               <select
-                name="especialidad"
-                id="especialidad"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 required
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md"
-                value={formData.especialidad}
-                
               >
-                <option value="">Seleccione una especialidad</option>
-                {especialidades.map((esp) => (
-                  <option key={esp} value={esp}>
-                    {esp}
-                  </option>
-                ))}
+                <option value="Ganadera">Ganadera</option>
+                <option value="Agricola">Agrícola</option>
+                <option value="Mixta">Mixta</option>
               </select>
             </div>
-          </div>
-
-          <div className="flex justify-end space-x-4 pt-4">
-            <button
-              type="button"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="bg-green-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Guardar Finca
-            </button>
-          </div>
-        </form>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                  <Users size={20} className="mr-2 text-green-600" />
+                  Trabajadores
+                </label>
+                <input
+                  type="number"
+                  name="employees"
+                  value={formData.employees}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  min="1"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                  <LayoutGrid size={20} className="mr-2 text-green-600" />
+                  Hectáreas Totales
+                </label>
+                <input
+                  type="number"
+                  name="hectares"
+                  value={formData.hectares}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  min="0"
+                  step="0.1"
+                  required
+                />
+              </div>
+            </div>
+            
+            {formData.category === 'Mixta' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                    <Wheat size={20} className="mr-2 text-green-600" />
+                    Hectáreas para Cultivos
+                  </label>
+                  <input
+                    type="number"
+                    name="cropsHectares"
+                    value={formData.cropsHectares}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    min="0"
+                    step="0.1"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2 flex items-center">
+                    <Beef size={20} className="mr-2 text-green-600" />
+                    Hectáreas para Ganadería
+                  </label>
+                  <input
+                    type="number"
+                    name="livestockHectares"
+                    value={formData.livestockHectares}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    min="0"
+                    step="0.1"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+            
+            <div className="mt-8">
+              <button
+                type="submit"
+                className="w-full bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-green-600 flex items-center justify-center"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-spin mr-2">⟳</span> 
+                    Creando...
+                  </>
+                ) : (
+                  'Crear Finca'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+        
       </div>
     </div>
   );

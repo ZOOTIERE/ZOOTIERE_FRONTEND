@@ -20,16 +20,25 @@ export interface FincaFormData {
   livestockHectares?: number;
   userId: string;
 }
-
+export interface UserData {
+  id: string;
+  email: string;
+  // Agrega otras propiedades si existen en el objeto guardado
+}
+export interface NewFinca {
+  second: boolean;
+}
 export interface FincaData {
-  id: number;
+  id: string;
   name: string;
-  address_finca: string;
-  num_trabajadores: number;
-  hectareas: number;
-  num_vacas: number;
-  num_crias: number;
-  especialidad: string;
+  address: string;
+  category: 'Ganadera' | 'Agricola' | 'Mixta';
+  employees: number;
+  hectares: number;
+  animals?: string[];
+  cropsHectares?: number;
+  livestockHectares?: number;
+  userId: string;
 }
 
 export interface AnimalFormData {
@@ -42,9 +51,14 @@ export interface AnimalFormData {
   motherId: string | null;
 }
 export interface Animal {
+  id: string;
   name: string;
-  type: string;
-  imagenUrl?: string; // Puedes ajustar los campos según tu API
+  species: string;
+  breed: string;
+  birthDate: Date;
+  fincaId: string;
+  fatherId: string | null;
+  motherId: string | null;
 }
 
 export interface AnimalData {

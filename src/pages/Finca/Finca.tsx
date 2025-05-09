@@ -3,6 +3,7 @@ import { AddCard, Card } from '../../components/Card/Card';
 import { FincaService } from '../../api';
 import { FincaData } from '../../types/global';
 import defaultFinca from '../../assets/imgs/image.png';
+import { getUserDataFromLocalStorage } from '../../utils/getUserData';
 
 
 
@@ -16,7 +17,9 @@ export const Finca: React.FC = () => {
       try {
         setLoading(true);
         setError('');
-        const response = await FincaService.getAllFincas();
+        const id = getUserDataFromLocalStorage()?.id as string;
+        const response = await FincaService.getFincaID(id);
+        console.log(response.data);
         setFincas(response.data); // Supongo que `response` contiene un array de fincas
       } catch (err) {
         setError('Error al cargar las fincas');
@@ -46,12 +49,12 @@ export const Finca: React.FC = () => {
                   key={index}
                   id={finca.id}
                   titulo={finca.name || `Finca ${index + 1}`}
-                  subtitulo={`Especialidad: ${finca.especialidad|| 'Desconocida'}`}
+                  subtitulo={`Especialidad: ${finca.category || 'Desconocida'}`}
                   imagenUrl={defaultFinca} // Ajusta `imageUrl` según tu API
                   type='fincas'
                 />
               ))}
-              <AddCard type="finca" />
+              <AddCard type="farm" />
             </>
           )}
         </div>
