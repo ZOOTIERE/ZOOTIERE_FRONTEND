@@ -11,7 +11,6 @@ export interface CardProps {
   id: string;
   titulo: string;
   subtitulo: string;
-  imagenUrl: string;
   type?: string;
 }
 

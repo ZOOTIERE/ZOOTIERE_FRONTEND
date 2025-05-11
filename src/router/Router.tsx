@@ -9,6 +9,8 @@ import { HomeLayout } from "../Layout/Home/HomeLayout";
 import { Home } from "../pages/Home/Home";
 import { Pricing } from "../pages/Pricing/Pricing";
 import { NewUser } from "../pages/NewUser/NewUser";
+import CreateWorker from "../pages/RegisterWorker/RegisterWorker";
+import { Workers } from "../pages/Workers/Workers";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -48,6 +50,14 @@ export const AppRouter = createBrowserRouter([
     {
         path: "/register-farm",
         element: <RegisterFinca/>
+    },
+    {
+        path: "/register-workers",
+        element: <AppLayout><CreateWorker/></AppLayout>
+    },
+    {
+        path: "/workers",
+        element: <AppLayout><Workers/></AppLayout>
     }
 
 ]);

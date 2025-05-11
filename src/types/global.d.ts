@@ -23,7 +23,6 @@ export interface FincaFormData {
 export interface UserData {
   id: string;
   email: string;
-  // Agrega otras propiedades si existen en el objeto guardado
 }
 export interface NewFinca {
   second: boolean;
@@ -94,6 +93,12 @@ export interface VaccineForm {
 }
 
 export interface WorkerForm {
+  name: string;
+  rol: string;
+  fincaId: string;
+}
+export interface WorkerData {
+  id: string;
   name: string;
   rol: string;
   fincaId: string;
