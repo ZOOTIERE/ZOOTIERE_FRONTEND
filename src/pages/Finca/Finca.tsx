@@ -50,8 +50,8 @@ export const Finca: React.FC = () => {
                   id={finca.id}
                   titulo={finca.name || `Finca ${index + 1}`}
                   subtitulo={`Especialidad: ${finca.category || 'Desconocida'}`}
-                  imagenUrl={defaultFinca} // Ajusta `imageUrl` según tu API
-                  type='fincas'
+                
+                  type='farms'
                 />
               ))}
               <AddCard type="farm" />
