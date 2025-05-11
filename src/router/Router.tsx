@@ -11,6 +11,7 @@ import { Pricing } from "../pages/Pricing/Pricing";
 import { NewUser } from "../pages/NewUser/NewUser";
 import CreateWorker from "../pages/RegisterWorker/RegisterWorker";
 import { Workers } from "../pages/Workers/Workers";
+import { RegisterVaccine } from "../pages/RegisterVaccine/RegisterVaccine";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -36,11 +37,11 @@ export const AppRouter = createBrowserRouter([
         element: <Register/>
     },
     {
-        path: "/fincas",
+        path: "/farms",
         element: <AppLayout><Finca/></AppLayout>
     },
     {
-        path: "/fincas/:id",
+        path: "/farns/:id",
         element: <AppLayout><DetailFinca/></AppLayout>
     },
     {
@@ -58,6 +59,10 @@ export const AppRouter = createBrowserRouter([
     {
         path: "/workers",
         element: <AppLayout><Workers/></AppLayout>
+    },
+    {
+        path: "/register-vaccine",
+        element: <AppLayout><RegisterVaccine/></AppLayout>
     }
 
 ]);

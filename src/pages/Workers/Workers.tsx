@@ -18,8 +18,10 @@ export const Workers: FC = () => {
       try {
         setLoading(true);
         setError('');
-        const r:any = WorkersServices.listWorkers();
-        setWorkers(r);        
+        const worker:any = await WorkersServices.listWorkers();
+        console.log(worker);
+        setWorkers(worker);      
+        setLoading(false);  
       } catch (err) {
         setError('Error al cargar los trabajadores');
         setLoading(false);
@@ -66,8 +68,8 @@ export const Workers: FC = () => {
           </div>
         ) : (
           <div className="flex flex-wrap">
-            {workers.length === 0 && searchTerm === '' ? (
-              <AddCard type="worker" />
+            {workers.length === 0  ? (
+              <AddCard type="workers" />
             ) : workers.length === 0 ? (
               <div className="w-full flex flex-col items-center justify-center h-64">
                 <p className="text-lg text-gray-600 mb-4">No se encontraron trabajadores que coincidan con tu búsqueda</p>
