@@ -51,7 +51,7 @@ export const AppRouter = createBrowserRouter([
     },
     {
         path: "/register-farm",
-        element: <RegisterFinca/>
+        element: <AppLayout><RegisterFinca/></AppLayout>
     },
     {
         path: "/register-workers",
