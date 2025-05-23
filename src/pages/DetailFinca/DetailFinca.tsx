@@ -31,8 +31,8 @@ export const DetailFinca = () => {
     const fetchAnimals = async () => {
       try {
         setLoadingAnimals(true);
-        // Asumiendo que hay un método para obtener animales por ID de finca
         const response = await AnimalService.getAnimalsByFinca(id as string);
+        console.log(response);
         setAnimals(response.data);
       } catch (err) {
         console.error('Error al cargar los animales de la finca');

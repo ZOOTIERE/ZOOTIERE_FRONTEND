@@ -9,6 +9,16 @@ export interface RegisterFormData {
   password: string;
 }
 
+export interface CreateAnimalDTO {
+    name: string;
+    species: string;
+    breed: string;
+    birthDate: Date;
+    fincaId: string;
+    fatherId: string | null;
+    motherId: string | null;
+}
+
 export interface FincaFormData {
   name: string;
   address: string;

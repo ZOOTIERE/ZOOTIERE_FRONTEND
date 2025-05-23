@@ -13,6 +13,7 @@ import CreateWorker from "../pages/RegisterWorker/RegisterWorker";
 import { Workers } from "../pages/Workers/Workers";
 import { RegisterVaccine } from "../pages/RegisterVaccine/RegisterVaccine";
 import {RegisterFeed} from "../pages/RegisterFeed/RegisterFeed";
+import { RegisterAnimal } from "../pages/RegisterAnimal/RegisterAnimal";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ export const AppRouter = createBrowserRouter([
     {
         path: "/register-vaccine",
         element: <AppLayout><RegisterVaccine/></AppLayout>
+    },
+    {
+        path: "/register-animal",
+        element: <AppLayout><RegisterAnimal/></AppLayout>
     },
     {
         path: "/register-feed",
