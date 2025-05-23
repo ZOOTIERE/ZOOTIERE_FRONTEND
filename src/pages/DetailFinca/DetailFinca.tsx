@@ -148,12 +148,6 @@ export const DetailFinca = () => {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white flex justify-between items-center">
           <h2 className="text-xl font-bold">Animales de la Finca</h2>
-          <Link 
-            to={`/register-animal?fincaId=${id}`}
-            className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors"
-          >
-            Añadir Animal
-          </Link>
         </div>
 
         {/* No se muestra filtro de animales */}
@@ -167,11 +161,6 @@ export const DetailFinca = () => {
           ) : filteredAnimals && filteredAnimals.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredAnimals.map(animal => (
-                <Link 
-                  to={`/animals/${animal.id}`} 
-                  key={animal.id}
-                  className="block bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-100 p-2 rounded-full">
                       <Beef className="h-6 w-6 text-blue-600" />
@@ -181,7 +170,6 @@ export const DetailFinca = () => {
                       <p className="text-sm text-gray-500">{animal.species}</p>
                     </div>
                   </div>
-                </Link>
               ))}
             </div>
           ) : (
